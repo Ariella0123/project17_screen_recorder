@@ -1,13 +1,104 @@
-/* 玻璃拟态卡片与预览 */
+/* ================================================================= *
+ * WebScreen Studio - 暖色系组件与按钮样式 (Components & UI Elements)
+ * ================================================================= */
+
+/* 按钮通用样式 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(234, 88, 12, 0.06);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 主按钮：日落暖橙渐变 */
+.btn.primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 6px 18px var(--primary-glow);
+}
+
+.btn.primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #fb923c 0%, #c2410c 100%);
+    box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+/* 次要按钮：柔和白色/奶油色卡片 */
+.btn.secondary {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-main);
+    border-color: rgba(234, 88, 12, 0.18);
+}
+
+.btn.secondary:hover:not(:disabled) {
+    background: #ffffff;
+    border-color: rgba(249, 115, 22, 0.4);
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.1);
+    color: var(--primary-hover);
+}
+
+/* 录制按钮：温暖朱红 */
+.btn.record {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #ffffff;
+    box-shadow: 0 6px 18px var(--danger-glow);
+}
+
+.btn.record:hover:not(:disabled) {
+    background: linear-gradient(135deg, #f87171 0%, #b91c1c 100%);
+    box-shadow: 0 8px 22px var(--danger-glow);
+}
+
+/* 停止/危险按钮 */
+.btn.danger {
+    background: #fef2f2;
+    color: #ef4444;
+    border-color: #fecaca;
+}
+
+.btn.danger:hover:not(:disabled) {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+/* 视频预览视窗容器 */
+.preview-section {
+    width: 100%;
+}
+
 .preview-container {
     position: relative;
     width: 100%;
     aspect-ratio: 16/9;
-    background: #000;
-    border-radius: 12px;
+    background: #111827; /* 播放区域保持深色以保障视频画面鲜明 */
+    border-radius: 20px;
     overflow: hidden;
-    border: 1px solid var(--border-color);
-    margin: 20px 0;
+    border: 2px solid rgba(234, 88, 12, 0.15);
+    box-shadow: 0 20px 40px -15px rgba(234, 88, 12, 0.12);
+    transition: border-color 0.3s ease;
+}
+
+.preview-container:hover {
+    border-color: var(--primary);
 }
 
 video {
@@ -19,30 +110,36 @@ video {
 /* 摄像头画中画悬浮窗 */
 .webcam-pip {
     position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 200px;
-    height: 112px;
-    border-radius: 8px;
+    bottom: 24px;
+    right: 24px;
+    width: 220px;
+    height: 124px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 2px solid var(--primary-color);
-    background: #111;
+    border: 3px solid var(--primary);
+    background: #1f2937;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     cursor: grab;
 }
 
-/* 状态指示器 */
+/* 状态指示框 (左上角状态与计时器) */
 .status-overlay {
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    padding: 6px 12px;
-    border-radius: 20px;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 8px 18px;
+    border-radius: 30px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .dot {
@@ -52,10 +149,91 @@ video {
     background: #9ca3af;
 }
 
-.dot.recording { background: var(--danger-color); animation: pulse 1.5s infinite; }
+.dot.recording {
+    background: var(--danger);
+    box-shadow: 0 0 10px var(--danger);
+    animation: pulse-glow 1.5s infinite;
+}
 
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+@keyframes pulse-glow {
+    0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+    70% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+#recording-timer {
+    font-variant-numeric: tabular-nums;
+    color: #9a3412;
+    font-weight: 700;
+}
+
+/* 底部操作面板 */
+.control-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    padding: 20px 24px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px -10px rgba(234, 88, 12, 0.08);
+}
+
+.control-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-group.primary-controls {
+    border-top: 1px solid rgba(234, 88, 12, 0.1);
+    padding-top: 16px;
+}
+
+/* 录像库与弹窗模态框 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(31, 41, 55, 0.5);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content.glass {
+    background: #ffffff;
+    border: 1px solid rgba(234, 88, 12, 0.2);
+    border-radius: 24px;
+    padding: 30px;
+    width: 100%;
+    max-width: 800px;
+    box-shadow: 0 25px 50px -12px rgba(234, 88, 12, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-content h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
 }
